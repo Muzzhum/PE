@@ -1,13 +1,14 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
 
-void sumsDivisible() //Project Euler problem 1
+void sumsDivisible(int problem) //Project Euler problem 1
 {
     int nSum = 0;
-    for (int nCount = 1 ; nCount < 1000 ; nCount++)
+    for (int nCount = 1 ; nCount < problem ; nCount++)
     {
 
         if (nCount % 3 == 0 || nCount % 5 == 0)
@@ -16,7 +17,7 @@ void sumsDivisible() //Project Euler problem 1
     cout << nSum << endl;
 }
 
-void fibonacciSums() //Project Euler problem 2
+void fibonacciSums(int problem) //Project Euler problem 2
 {
     int x = 0;
     int y = 1;
@@ -30,7 +31,7 @@ void fibonacciSums() //Project Euler problem 2
         y = z;
         if (y % 2 == 0)
             sum += y;
-    } while (y <= 4000000);
+    } while (y <= problem);
 
     cout << sum << endl;
 
@@ -59,47 +60,49 @@ int primeChecker(long long problem)  //Checks if numbers are prime
     return problem;
 }
 
-void primeFactors(long long problem) //Project Euler problem 3 unfinished
-{
-    /*
-    Find the largest prime factor.
-        Check if number is prime
-            Use Prime Checker
-        Check if sqrt number - counter is prime
-    */
-    long square = sqrt(problem); //Few numbers have prime factors larger than their own squares
-    int answers[64] = { 0 };
-    int jjj = 0;
 
-    for (long iii = 2; iii < square; iii++)
+
+void primeLister(long long topLim, vector<long long> &primeList) // Makes a list of primes
+{
+
+
+    for (long long possiblePrime = 5 ; possiblePrime <= topLim ;possiblePrime += 2)
     {
-        if (primeChecker(square - iii))
+        bool isPrime = true;
+        for (unsigned int counter = 0;counter < primeList.size();counter++)
         {
-            answers[jjj] = primeChecker(square - iii);
-            square = primeChecker(square - iii);
-            jjj++;
-        }
-    }
-    /*
-    long answers[64] = { 0 };
-    for (long long iii = 0; iii < (sizeof(answers) / sizeof(answers[0])); iii++)
-    {
-        if (answers[iii] != 0)
-        {
-            if (problem % answers[iii] == 0)
+            if (possiblePrime % primeList.at(counter) == 0)
             {
-                long currentFactor = answers[iii];
-                cout << currentFactor << " ";
+                isPrime = false;
+                break;
             }
         }
+        if (isPrime)
+            primeList.push_back(possiblePrime);
     }
-    */
+}
 
-    for (int iii = 0 ; iii <= 64 ; iii++)
+void primeFactors(long long problem) //Project Euler problem 3 unfinished
+{
+    vector<long long> primes(1, 2);
+    primes.push_back(3);
+
+    vector<long long> primeList;
+    primeLister(problem, primes);
+
+    for (unsigned int counter = 0; counter < primes.size(); counter++)
     {
+        if (problem % primes.at(counter))
+        {
+            primeList.push_back(primes.at(counter));
+            problem /= primes.at(counter);
+        }
 
-        cout << answers[iii] << " ";
     }
+
+    for (int iii = 0 ; iii < primeList.size() ; iii++)
+        cout << primeList.at(iii) << " " ;
+
 
 }
 
@@ -137,6 +140,7 @@ int smallestMultiple(int topLim) // Project Euler problem 5 unfinished
 
 int main()
 {
-    primeFactors(13195);
+    primeFactors(24);
+
     return 0;
 }
