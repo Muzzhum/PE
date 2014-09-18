@@ -60,12 +60,8 @@ int primeChecker(long long problem)  //Checks if numbers are prime
     return problem;
 }
 
-
-
 void primeLister(long long topLim, vector<long long> &primeList) // Makes a list of primes
 {
-
-
     for (long long possiblePrime = 5 ; possiblePrime <= topLim ;possiblePrime += 2)
     {
         bool isPrime = true;
@@ -79,23 +75,35 @@ void primeLister(long long topLim, vector<long long> &primeList) // Makes a list
         }
         if (isPrime)
             primeList.push_back(possiblePrime);
+
+        if (topLim % possiblePrime == 0)
+            topLim /= possiblePrime;
+
     }
 }
 
-void primeFactors(long long problem) //Project Euler problem 3 unfinished
+void primeFactors(long long problem) //Project Euler problem 3
 {
-    vector<long long> primes(1, 2);
+    cout << problem << endl;
+
+    vector<long long> primes;
+    primes.push_back(2);
     primes.push_back(3);
 
     vector<long long> primeList;
     primeLister(problem, primes);
 
-    for (unsigned int counter = 0; counter < primes.size(); counter++)
+    cout << primes.size() << endl;
+
+    for (unsigned int counter = 0; counter < primes.size(); )
     {
-        if (problem % primes.at(counter))
+        if (problem % primes.at(counter) == 0)
         {
             primeList.push_back(primes.at(counter));
             problem /= primes.at(counter);
+        } else
+        {
+            counter++;
         }
 
     }
@@ -106,41 +114,39 @@ void primeFactors(long long problem) //Project Euler problem 3 unfinished
 
 }
 
-void largestPalindromeProduct(int numOfCiphers) // Project Euler problem 4 unfinished
+bool isPalindrome(char problem[]) // Checks if numbers are palindrome numbers
 {
-    char str[] = "90109";
-    int length = 0;
-    int iii = 0;
-    length = sizeof(str);
-    if (length % 2 == 0)
-    {
-        while (iii < length / 2)
-            if (str[iii] = str[length - iii - 1])
-                iii++;
-            else
-                break;
-    } else
-    {
-        while (iii < length / 2 - 0.5)
-            if (str[iii] = str[length - iii - 1])
-                iii++;
-            else
-                break;
-    }
-    cout << length << endl;
+    bool palindrome = true;       // If this is true, problem is palindrome
+    int length = sizeof(problem) - 1;  //Length of the problem. -1 because of null pointer
+
+    //This loop will check each element in
+    for (int iii = 0 ; iii < length / 2 - 0.5 ; iii++)
+        if (problem[iii] != problem[length - iii])
+            palindrome = false;
+
+
+    return palindrome;
+}
+
+int largestPalindromeProduct(int numOfCiphers) // Project Euler problem 4 unfinished
+{
+    char str[] = "91219";
+    cout << isPalindrome(str) << endl;
+
+    return 0;
 }
 
 int smallestMultiple(int topLim) // Project Euler problem 5 unfinished
 {
-     /*
+    /*
 
-     */
+    */
 }
 
 
 int main()
 {
-    primeFactors(24);
+    largestPalindromeProduct(3);
 
     return 0;
 }
