@@ -114,15 +114,17 @@ void primeFactors(long long problem) //Project Euler problem 3
 
 }
 
-bool isPalindrome(char problem[]) // Checks if numbers are palindrome numbers
+bool isPalindrome(vector<char> problem) // Checks if numbers are palindrome numbers
 {
     bool palindrome = true;       // If this is true, problem is palindrome
-    int length = sizeof(problem) - 1;  //Length of the problem. -1 because of null pointer
+    int length = problem.size();  //Length of the problem
+    cout << endl << length << endl;
 
-    //This loop will check each element in
-    for (int iii = 0 ; iii < length / 2 - 0.5 ; iii++)
-        if (problem[iii] != problem[length - iii])
-            palindrome = false;
+    //This loop will check each element in problem and see if it is equal to the
+    //one that is in spot length-iii
+    for (int iii = 0 ; iii < length / 2; iii++)
+        if (problem.at(iii) != problem.at(length - iii - 1)) //-1 because of how vectors .at() works
+            palindrome = false;  // if the above statement is true, number is not palindrome
 
 
     return palindrome;
@@ -130,7 +132,11 @@ bool isPalindrome(char problem[]) // Checks if numbers are palindrome numbers
 
 int largestPalindromeProduct(int numOfCiphers) // Project Euler problem 4 unfinished
 {
-    char str[] = "91219";
+    int num = 9119;
+    vector<char> str = static_cast<char>(num);
+
+    for (int iii = 0; iii < str.size() ; iii++)
+        cout << str.at(iii);
     cout << isPalindrome(str) << endl;
 
     return 0;
