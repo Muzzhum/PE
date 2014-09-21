@@ -132,12 +132,18 @@ bool isPalindrome(vector<char> problem) // Checks if numbers are palindrome numb
 
 int largestPalindromeProduct(int numOfCiphers) // Project Euler problem 4 unfinished
 {
-    int num = 9119;
-    vector<char> str = static_cast<char>(num);
+    int num = 91219;
+    vector<char> MyVct;
 
-    for (int iii = 0; iii < str.size() ; iii++)
-        cout << str.at(iii);
-    cout << isPalindrome(str) << endl;
+    if (num == 0)
+        MyVct.push_back('0');
+    else
+        for ( ; num; num /= 10)
+            MyVct.push_back('0' + (num % 10));
+
+    for (int iii = 0; iii < MyVct.size() ; iii++)
+        cout << MyVct.at(iii);
+    cout << isPalindrome(MyVct) << endl;
 
     return 0;
 }
