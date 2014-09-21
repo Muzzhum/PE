@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
@@ -130,20 +131,50 @@ bool isPalindrome(vector<char> problem) // Checks if numbers are palindrome numb
     return palindrome;
 }
 
+int vtoi(vector<char> vec, int beg, int ending) // vector to int
+{
+    int ret = 0;
+    int mult = pow(10 , (ending-beg));
+
+    for(int i = beg; i <= ending; i++)
+    {
+        ret += (vec[i] - '0') * mult;
+        mult /= 10;
+    }
+    return ret;
+}
+
 int largestPalindromeProduct(int numOfCiphers) // Project Euler problem 4 unfinished
 {
-    int num = 91219;
-    vector<char> MyVct;
+    vector<char> str(1, '1'); // Creates the vector that will be the starter. 10^x
 
-    if (num == 0)
-        MyVct.push_back('0');
-    else
-        for ( ; num; num /= 10)
-            MyVct.push_back('0' + (num % 10));
+    // This snippet adds as many 0's to str as is told in the calling of the function
+    for (int counter = 0; counter < numOfCiphers - 1; counter++)
+        str.push_back('0');
 
-    for (int iii = 0; iii < MyVct.size() ; iii++)
-        cout << MyVct.at(iii);
-    cout << isPalindrome(MyVct) << endl;
+    int num = vtoi(str, 0, numOfCiphers - 1); // Convert str to int
+    //cout << num << endl;
+
+
+    int workingNum;
+    int factor1, factor2 = num;
+    for ( ; factor1 < pow(10.0, numOfCiphers) - 1 ; factor1++)
+        for ( ; factor2 < pow(10.0, numOfCiphers) - 1 ; factor2++)
+        {
+            vector<char> number;
+            workingNum = factor1 * factor2;
+            // This little if/else block puts numbers from an int into a vector<char>
+            // in reverse order. Not my solution.
+            if (workingNum == 0)
+                number.push_back('0');
+            else
+                for ( ; workingNum; workingNum /= 10)
+                    number.push_back('0' + (workingNum % 10));
+        }
+
+    //for (int iii = 0; iii < number.size() ; iii++)
+    //    cout << number.at(iii);
+    //cout << isPalindrome(number) << endl;
 
     return 0;
 }
