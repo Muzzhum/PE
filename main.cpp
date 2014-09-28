@@ -2,6 +2,8 @@
 #include <cmath>
 #include <vector>
 #include <math.h>
+#include <thread>
+#include <future>
 
 using namespace std;
 
@@ -118,39 +120,19 @@ void primeFactors(long long problem) //Project Euler problem 3
 bool isPalindrome(vector<char> problem) // Checks if numbers are palindrome numbers
 {
     bool palindrome = true;       // If this is true, problem is palindrome
-<<<<<<< HEAD
-    int length = 6;  //Length of the problem. -1 because of null pointer
 
-    cout << length << endl;
-
-    //This loop will check each element in problem[] and see if it is palindrome
-    for (int iii = 0 ; iii <= length / 2 ; iii++)
-        if (problem[iii] != problem[length - iii])
-            palindrome = false;
-=======
     int length = problem.size();  //Length of the problem
-    cout << endl << length << endl;
+    //cout << length << endl;
 
     //This loop will check each element in problem and see if it is equal to the
     //one that is in spot length-iii
     for (int iii = 0 ; iii < length / 2; iii++)
         if (problem.at(iii) != problem.at(length - iii - 1)) //-1 because of how vectors .at() works
             palindrome = false;  // if the above statement is true, number is not palindrome
->>>>>>> origin/master
-
 
     return palindrome;
 }
 
-<<<<<<< HEAD
-int largestPalindromeProduct(const int numOfCiphers) // Project Euler problem 4 unfinished
-{
-    int num1, num2 = 0;
-
-    char str[] = "882288";
-    cout << sizeof(str) << endl;
-    cout << isPalindrome(str) << endl;
-=======
 int vtoi(vector<char> vec, int beg, int ending) // vector to int
 {
     int ret = 0;
@@ -173,44 +155,75 @@ int largestPalindromeProduct(int numOfCiphers) // Project Euler problem 4 unfini
         str.push_back('0');
 
     int num = vtoi(str, 0, numOfCiphers - 1); // Convert str to int
-    //cout << num << endl;
 
+    vector<int> number;
+    long workingNum;
+    int largestPalindrome = 0;
 
-    int workingNum;
-    int factor1, factor2 = num;
-    for ( ; factor1 < pow(10.0, numOfCiphers) - 1 ; factor1++)
-        for ( ; factor2 < pow(10.0, numOfCiphers) - 1 ; factor2++)
+    for (long factor1 = pow(10.0, numOfCiphers) ; factor1 > num ; factor1--)
+        for (long factor2 = pow(10.0, numOfCiphers) ; factor2 >= num ; factor2--)
         {
-            vector<char> number;
+            vector<char> workingVect;
             workingNum = factor1 * factor2;
-            // This little if/else block puts numbers from an int into a vector<char>
-            // in reverse order. Not my solution.
+
             if (workingNum == 0)
-                number.push_back('0');
+            {
+                workingVect.push_back('0');
+            }
             else
+            {
                 for ( ; workingNum; workingNum /= 10)
-                    number.push_back('0' + (workingNum % 10));
+                    workingVect.push_back('0' + (workingNum % 10));
+            }
+
+            if (isPalindrome(workingVect))
+            {
+                // This little if/else block puts numbers from an int into a vector<char>
+                // in reverse order. Not my solution.
+                if (workingNum == 0)
+                    number.push_back('0');
+                else
+                    for ( ; workingNum > 1; workingNum /= 10)
+                        number.push_back('0' + (workingNum % 10));
+                    break;
+            }
+            if (isPalindrome(workingVect))
+                break;
+
         }
 
-    //for (int iii = 0; iii < number.size() ; iii++)
-    //    cout << number.at(iii);
-    //cout << isPalindrome(number) << endl;
->>>>>>> origin/master
-
+    for (int iii = 0 ; iii < number.size() ; iii++)
+        cout << number.at(iii) << " ";
     return 0;
 }
 
 int smallestMultiple(int topLim) // Project Euler problem 5 unfinished
 {
-    /*
-
-    */
+    int smallest = 1;
+    for (int iii = 2 ; iii <= topLim ;)
+    {
+        if (iii % smallest)
+            iii++;
+        else
+            smallest += iii;
+    }
+    // This for loop is just an error checker. It prints ERROR if number is
+    // not evenly divisible by counter.
+    for (int counter = 2 ; counter <= topLim ; counter++)
+    {
+        if (smallest % counter)
+        {
+            cout << "ERROR" << endl;
+            break;
+        }
+    }
+    cout << smallest << endl;
+    return 0;
 }
-
 
 int main()
 {
-    largestPalindromeProduct(3);
+    smallestMultiple(4);
 
     return 0;
 }
