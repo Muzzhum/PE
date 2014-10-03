@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include <math.h>
 #include <thread>
 #include <future>
 
@@ -63,12 +62,12 @@ int primeChecker(long long problem)  //Checks if numbers are prime
     return problem;
 }
 
-void primeLister(long long topLim, vector<long long> &primeList) // Makes a list of primes
+void primeLister(long long topLim, vector<unsigned long long> &primeList) // Makes a list of primes
 {
-    for (long long possiblePrime = 5 ; possiblePrime <= topLim ;possiblePrime += 2)
+    for (unsigned long long possiblePrime = 3 ; possiblePrime <= topLim ;possiblePrime += 2)
     {
         bool isPrime = true;
-        for (unsigned int counter = 0;counter < primeList.size();counter++)
+        for (unsigned long long counter = 0;counter < primeList.size();counter++)
         {
             if (possiblePrime % primeList.at(counter) == 0)
             {
@@ -89,11 +88,11 @@ void primeFactors(long long problem) //Project Euler problem 3
 {
     cout << problem << endl;
 
-    vector<long long> primes;
+    vector<unsigned long long> primes;
     primes.push_back(2);
     primes.push_back(3);
 
-    vector<long long> primeList;
+    vector<unsigned long long> primeList;
     primeLister(problem, primes);
 
     cout << primes.size() << endl;
@@ -197,19 +196,19 @@ int largestPalindromeProduct(int numOfCiphers) // Project Euler problem 4 unfini
     return 0;
 }
 
-bool dividesByLessThan(int topLim, int number)
+bool dividesByLessThan(int topLim, int number) // Divides a number by all numbers smaller than it
 {
     bool isDivisible = true;
-    for (int iii = 0 ; iii <= topLim ; iii++)
-    {
-        if ((topLim - iii) % number)
+    for (int iii = 0 ; iii < topLim ; iii++)
+        if (number % (topLim - iii))
+        {
             isDivisible = false;
-        cout << topLim << " " << iii << " " << number << " " << isDivisible << endl;
-    }
+            return isDivisible;
+        }
     return isDivisible;
 }
 
-int smallestMultiple(int topLim) // Project Euler problem 5 unfinished
+int smallestMultiple(int topLim) // Project Euler problem 5
 {
     int smallestNum = 2;
     for (int iii = 2 ; iii <= topLim ; )
@@ -218,7 +217,6 @@ int smallestMultiple(int topLim) // Project Euler problem 5 unfinished
             iii++;
         else
             smallestNum++;
-        cout << smallestNum << " " << iii << endl;
     }
 
     // This for loop is just an error checker. It prints ERROR if number is
@@ -227,17 +225,71 @@ int smallestMultiple(int topLim) // Project Euler problem 5 unfinished
     {
         if (smallestNum % counter)
         {
-            cout << "ERROR" << endl;
+            cout << "ERROR, Number is not divisible by all numbers smaller!" << endl;
             break;
         }
     }
-    cout << smallestNum << endl;
-    return 0;
+    return smallestNum;
+}
+
+int sumSquareDifference(int topLim) // Project Euler problem 6
+{
+    int squareSum = 0;
+    for (int iii = 1 ; iii <= topLim ; iii++)
+        squareSum += pow(iii, 2);
+
+    double sumSquare = 0;
+    for (double jjj = 1 ; jjj <= topLim ; jjj++)
+        sumSquare += jjj;
+    sumSquare = pow(sumSquare, 2.0);
+
+    cout << sumSquare << " " << squareSum << endl;
+    int difference = sumSquare - squareSum;
+    return difference;
+}
+
+int specialPythagoreanTriplet(int sum) // Project Euler problem 9
+{
+    /*
+    A pythagorean triplet looks like this: a < b < c
+    where a^2 + b^2 = c^2
+    There is exactly one pythagorean triplet where a+b+c = 1000.
+    Find product abc.
+    */
+
+    float answerA, answerB, answerC = 0.0;
+
+    for (float possibleB = 4.0 ; possibleB < 500 ; possibleB++)
+        for (float possibleA = 3.0; possibleA <= possibleB ; possibleA++)
+        {
+            float possibleC = sqrt(pow(possibleA, 2) + pow(possibleB, 2));
+
+            if (possibleA + possibleB + possibleC == 1000)
+            {
+                answerA = possibleA;
+                answerB = possibleB;
+                answerC = possibleC;
+            }
+        }
+
+
+    int answer = answerA * answerB * answerC;
+    return answer;
+}
+
+long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfinished
+{
+    vector<unsigned long long> primes;
+    primeLister(topLim, primes);
+
+    long long sum = 2; //2 because there is no 2 in the primeLister
+    for (long iii = 0 ; iii < primes.size() ; iii++)
+        sum += primes.at(iii);
+    return sum;
 }
 
 int main()
 {
-    smallestMultiple(3);
-
+    cout << summationOfPrimes(2000000) << endl;
     return 0;
 }
