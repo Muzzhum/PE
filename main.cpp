@@ -64,10 +64,10 @@ int primeChecker(long long problem)  //Checks if numbers are prime
 
 void primeLister(long long topLim, vector<unsigned long long> &primeList) // Makes a list of primes
 {
-    for (unsigned long long possiblePrime = 3 ; possiblePrime <= topLim ;possiblePrime += 2)
+    for (unsigned long long possiblePrime = 3 ; possiblePrime <= topLim ; possiblePrime += 2)
     {
         bool isPrime = true;
-        for (unsigned long long counter = 0;counter < primeList.size();counter++)
+        for (unsigned long long counter = 0 ; counter < primeList.size() ; counter++)
         {
             if (possiblePrime % primeList.at(counter) == 0)
             {
@@ -77,17 +77,11 @@ void primeLister(long long topLim, vector<unsigned long long> &primeList) // Mak
         }
         if (isPrime)
             primeList.push_back(possiblePrime);
-
-        if (topLim % possiblePrime == 0)
-            topLim /= possiblePrime;
-
     }
 }
 
 void primeFactors(long long problem) //Project Euler problem 3
 {
-    cout << problem << endl;
-
     vector<unsigned long long> primes;
     primes.push_back(2);
     primes.push_back(3);
@@ -95,19 +89,14 @@ void primeFactors(long long problem) //Project Euler problem 3
     vector<unsigned long long> primeList;
     primeLister(problem, primes);
 
-    cout << primes.size() << endl;
-
-    for (unsigned int counter = 0; counter < primes.size(); )
+    for (unsigned int counter = 0 ; counter < primes.size() ; )
     {
         if (problem % primes.at(counter) == 0)
         {
             primeList.push_back(primes.at(counter));
             problem /= primes.at(counter);
         } else
-        {
             counter++;
-        }
-
     }
 
     for (int iii = 0 ; iii < primeList.size() ; iii++)
@@ -279,10 +268,14 @@ int specialPythagoreanTriplet(int sum) // Project Euler problem 9
 
 long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfinished
 {
-    vector<unsigned long long> primes;
+    vector<unsigned long long> primes(1, 2);
     primeLister(topLim, primes);
+    for (long iii = 0 ; iii < primes.size() ; iii++)
+        cout << primes.at(iii) << " ";
+    cout << endl;
+    cout << primes.size() << endl;
 
-    long long sum = 2; //2 because there is no 2 in the primeLister
+    long long sum = 0; //2 because there is no 2 in the primeLister
     for (long iii = 0 ; iii < primes.size() ; iii++)
         sum += primes.at(iii);
     return sum;
@@ -290,6 +283,6 @@ long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfini
 
 int main()
 {
-    cout << summationOfPrimes(2000000) << endl;
+    cout << summationOfPrimes(1000000) << endl;
     return 0;
 }
