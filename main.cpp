@@ -270,19 +270,60 @@ long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfini
 {
     vector<unsigned long long> primes(1, 2);
     primeLister(topLim, primes);
-    for (long iii = 0 ; iii < primes.size() ; iii++)
-        cout << primes.at(iii) << " ";
-    cout << endl;
-    cout << primes.size() << endl;
 
-    long long sum = 0; //2 because there is no 2 in the primeLister
+    long long sum = 0;
     for (long iii = 0 ; iii < primes.size() ; iii++)
         sum += primes.at(iii);
     return sum;
 }
 
+long collatzMachine(long num)
+{
+    /*
+    COLLATZ MACHINE
+    input: num
+    if num % 2 == 0
+        num =/2
+        sequenceLength++
+    else
+        num *= 3
+        num ++
+        sequenceLength++
+    */
+    long length = 0;
+    if (num % 2 == 0)
+    {
+        num /= 2;
+        length++;
+    } else
+    {
+        num *= 3;
+        num++;
+        length++;
+    }
+    return length;
+}
+
+long longestCollatzSequence(long topLim)
+{
+    /*
+    while num<1million, run num through a collatz machine
+        If num > largestResult of Collatz machine
+            LR = num
+    */
+    long largestResult = 0;
+    long num = 0;
+    while (num < topLim)
+    {
+        long collatz = collatzMachine(num);
+        if (collatz > largestResult)
+            largestResult = collatz;
+    }
+    return largestResult;
+}
+
 int main()
 {
-    cout << summationOfPrimes(1000000) << endl;
+    cout << longestCollatzSequence(1000000) << endl;
     return 0;
 }
