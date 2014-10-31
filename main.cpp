@@ -291,15 +291,17 @@ long collatzMachine(long num)
         sequenceLength++
     */
     long length = 0;
-    if (num % 2 == 0)
+    while (num != 1)
     {
-        num /= 2;
-        length++;
-    } else
-    {
-        num *= 3;
-        num++;
-        length++;
+        if (num % 2 == 0)
+        {
+            num = num / 2;
+            length++;
+        } else {
+            num = num * 3;
+            num++;
+            length++;
+        }
     }
     return length;
 }
@@ -312,12 +314,19 @@ long longestCollatzSequence(long topLim)
             LR = num
     */
     long largestResult = 0;
-    long num = 0;
-    while (num < topLim)
+    long lastOut = 0;
+    for (long num = 1; num < topLim; num++)
     {
         long collatz = collatzMachine(num);
         if (collatz > largestResult)
             largestResult = collatz;
+
+        if (largestResult > lastOut)
+        {
+            cout << largestResult << endl;
+            lastOut = largestResult;
+        }
+        cout << num << endl;
     }
     return largestResult;
 }
