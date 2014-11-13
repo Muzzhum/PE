@@ -266,7 +266,7 @@ int specialPythagoreanTriplet(int sum) // Project Euler problem 9
     return answer;
 }
 
-long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfinished
+long long summationOfPrimes(long long topLim) // Project Euler problem 10
 {
     vector<unsigned long long> primes(1, 2);
     primeLister(topLim, primes);
@@ -277,7 +277,12 @@ long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfini
     return sum;
 }
 
-long collatzMachine(long num)
+long divisibleTriangularNum(int numOfDivisors)
+{
+
+}
+
+long collatzMachine(long num) //Makes Collatz sequences
 {
     /*
     COLLATZ MACHINE
@@ -306,33 +311,37 @@ long collatzMachine(long num)
     return length;
 }
 
-long longestCollatzSequence(long topLim)
+unsigned long long longestCollatzSequence(long long topLim) //Project Euler problem 14 unfinished
 {
     /*
     while num<1million, run num through a collatz machine
         If num > largestResult of Collatz machine
             LR = num
     */
-    long largestResult = 0;
-    long lastOut = 0;
-    for (long num = 1; num < topLim; num++)
+    unsigned long long lastOut = 0;
+    vector<unsigned long long> results (1, 1);
+    for (unsigned long long num = 113384; ; num++)
     {
-        long collatz = collatzMachine(num);
-        if (collatz > largestResult)
-            largestResult = collatz;
+        unsigned long long collatz = collatzMachine(num);
 
-        if (largestResult > lastOut)
+        cout << "Num = " << num << endl;
+        if (results.back() > lastOut)
         {
-            cout << largestResult << endl;
-            lastOut = largestResult;
+            cout << "Largest Result thus far = " << results.back() << endl;
+            lastOut = results.back();
         }
-        cout << num << endl;
+        if (num == topLim)
+            break;
+
     }
-    return largestResult;
+    return results.back();
 }
+
+
+
 
 int main()
 {
-    cout << longestCollatzSequence(1000000) << endl;
+    cout << "Longest sequence = " << longestCollatzSequence(1000000) << endl;
     return 0;
 }
