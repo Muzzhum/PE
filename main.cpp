@@ -277,7 +277,7 @@ long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfini
     return sum;
 }
 
-long collatzMachine(long num)
+long collatzMachine(long num) // Runs numbers through a Collatz sequence
 {
     /*
     COLLATZ MACHINE
@@ -290,46 +290,47 @@ long collatzMachine(long num)
         num ++
         sequenceLength++
     */
-    long length = 0;
-    while (num != 1)
+    long length = 1;
+
+    long long workingNum = num;
+    while (workingNum != 1)
     {
-        if (num % 2 == 0)
+        if (workingNum % 2 == 0)
         {
-            num = num / 2;
+            workingNum /= 2;
             length++;
         } else {
-            num = num * 3;
-            num++;
+            workingNum *= 3;
+            workingNum++;
             length++;
         }
     }
     return length;
 }
 
-long longestCollatzSequence(long topLim)
+long longestCollatzSequence(long topLim) // Project Euler problem 14
 {
     /*
     while num<1million, run num through a collatz machine
         If num > largestResult of Collatz machine
             LR = num
     */
-    long largestResult = 0;
+    int largestResult = 0;
     long lastOut = 0;
-    for (long num = 1; num < topLim; num++)
+    long winningNumber = 0;
+    for (long num = 1; num <= topLim; num++)
     {
-        long collatz = collatzMachine(num);
+        int collatz = collatzMachine(num);
         if (collatz > largestResult)
-            largestResult = collatz;
-
-        if (largestResult > lastOut)
         {
-            cout << largestResult << endl;
-            lastOut = largestResult;
+            largestResult = collatz;
+            winningNumber = num;
         }
-        cout << num << endl;
     }
-    return largestResult;
+    return winningNumber;
 }
+
+
 
 int main()
 {
