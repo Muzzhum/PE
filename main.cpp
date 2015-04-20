@@ -266,7 +266,7 @@ int specialPythagoreanTriplet(int sum) // Project Euler problem 9
     return answer;
 }
 
-long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfinished
+long long summationOfPrimes(long long topLim) // Project Euler problem 10
 {
     vector<unsigned long long> primes(1, 2);
     primeLister(topLim, primes);
@@ -277,7 +277,16 @@ long long summationOfPrimes(long long topLim) // Project Euler problem 10 unfini
     return sum;
 }
 
+<<<<<<< HEAD
 long collatzMachine(long num) // Runs numbers through a Collatz sequence
+=======
+long divisibleTriangularNum(int numOfDivisors)
+{
+
+}
+
+long collatzMachine(long num) //Makes Collatz sequences
+>>>>>>> origin/master
 {
     /*
     COLLATZ MACHINE
@@ -308,13 +317,18 @@ long collatzMachine(long num) // Runs numbers through a Collatz sequence
     return length;
 }
 
+<<<<<<< HEAD
 long longestCollatzSequence(long topLim) // Project Euler problem 14
+=======
+unsigned long long longestCollatzSequence(long long topLim) //Project Euler problem 14 unfinished
+>>>>>>> origin/master
 {
     /*
     while num<1million, run num through a collatz machine
         If num > largestResult of Collatz machine
             LR = num
     */
+<<<<<<< HEAD
     int largestResult = 0;
     long lastOut = 0;
     long winningNumber = 0;
@@ -328,12 +342,35 @@ long longestCollatzSequence(long topLim) // Project Euler problem 14
         }
     }
     return winningNumber;
+=======
+    unsigned long long lastOut = 0;
+    vector<unsigned long long> results (1, 1);
+    for (unsigned long long num = 113384; ; num++)
+    {
+        unsigned long long collatz = collatzMachine(num);
+
+        cout << "Num = " << num << endl;
+        if (results.back() > lastOut)
+        {
+            cout << "Largest Result thus far = " << results.back() << endl;
+            lastOut = results.back();
+        }
+        if (num == topLim)
+            break;
+
+    }
+    return results.back();
+>>>>>>> origin/master
 }
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 int main()
 {
-    cout << longestCollatzSequence(1000000) << endl;
+    cout << "Longest sequence = " << longestCollatzSequence(1000000) << endl;
     return 0;
 }
